@@ -323,6 +323,7 @@ Singleton {
 
       // location
       property JsonObject location: JsonObject {
+        property bool enabled: false
         property string name: defaultLocation
         property bool useFahrenheit: false
 

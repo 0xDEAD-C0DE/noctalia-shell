@@ -156,11 +156,6 @@ NPanel {
                      "icon": "settings-brightness",
                      "source": brightnessTab
                    }, {
-                     "id": SettingsPanel.Tab.Weather,
-                     "label": "Weather",
-                     "icon": "settings-weather",
-                     "source": weatherTab
-                   }, {
                      "id": SettingsPanel.Tab.ColorScheme,
                      "label": "Color Scheme",
                      "icon": "settings-color-scheme",
@@ -181,6 +176,15 @@ NPanel {
                      "source": wallpaperSelectorTab
                    })
     }
+    // Disable the Weather tab from SettingsPanel
+    if (Settings.data.location.enabled){
+      newTabs.push({
+                     "id": SettingsPanel.Tab.Weather,
+                     "label": "Weather",
+                     "icon": "settings-weather",
+                     "source": weatherTab
+                   })
+                 }
 
     newTabs.push({
                    "id": SettingsPanel.Tab.ScreenRecorder,
