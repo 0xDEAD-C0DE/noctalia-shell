@@ -49,11 +49,11 @@ NPanel {
         id: profileCard
         Layout.fillWidth: true
       }
-
-      WeatherCard {
-        id: weatherCard
-        Layout.fillWidth: true
-      }
+      // Remove the Weather Column from SidePanel
+      // WeatherCard {
+      //   id: weatherCard
+      //   Layout.fillWidth: true
+      // }
 
       // Middle section: media + stats column
       RowLayout {
