@@ -19,8 +19,8 @@ Rectangle {
 
   property color colorBg: Color.mSurfaceVariant
   property color colorFg: Color.mPrimary
-  property color colorBgHover: Color.mPrimary
-  property color colorFgHover: Color.mOnPrimary
+  property color colorBgHover: Color.mTertiary
+  property color colorFgHover: Color.mOnTertiary
   property color colorBorder: Color.mOutline
   property color colorBorderHover: Color.mOutline
 
@@ -30,8 +30,8 @@ Rectangle {
   signal rightClicked
   signal middleClicked
 
-  implicitWidth: size
-  implicitHeight: size
+  implicitWidth: Style.baseWidgetSize * scaling * sizeRatio
+  implicitHeight: Style.baseWidgetSize * scaling * sizeRatio
 
   opacity: root.enabled ? Style.opacityFull : Style.opacityMedium
   color: root.enabled && root.hovering ? colorBgHover : colorBg

@@ -187,7 +187,8 @@ ColumnLayout {
           color: getSchemeColor(modelData, "mSurface")
           border.width: Math.max(1, Style.borderL * scaling)
           border.color: (!Settings.data.colorSchemes.useWallpaperColors
-                         && (Settings.data.colorSchemes.predefinedScheme === modelData)) ? Color.mPrimary : Color.mOutline
+                         && (Settings.data.colorSchemes.predefinedScheme === modelData.split("/").pop().replace(
+                               ".json", ""))) ? Color.mSecondary : Color.mOutline
           scale: root.cardScaleLow
 
           // Mouse area for selection
@@ -198,8 +199,8 @@ ColumnLayout {
               Settings.data.colorSchemes.useWallpaperColors = false
               Logger.log("ColorSchemeTab", "Disabled matugen setting")
 
-              Settings.data.colorSchemes.predefinedScheme = schemePath
-              ColorSchemeService.applyScheme(schemePath)
+              Settings.data.colorSchemes.predefinedScheme = schemePath.split("/").pop().replace(".json", "")
+              ColorSchemeService.applyScheme(Settings.data.colorSchemes.predefinedScheme)
             }
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
@@ -281,21 +282,22 @@ ColumnLayout {
           // Selection indicator (Checkmark)
           Rectangle {
             visible: !Settings.data.colorSchemes.useWallpaperColors
-                     && (Settings.data.colorSchemes.predefinedScheme === schemePath)
+                     && (Settings.data.colorSchemes.predefinedScheme === schemePath.split("/").pop().replace(".json",
+                                                                                                             ""))
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.margins: Style.marginS * scaling
-            width: 24 * scaling
-            height: 24 * scaling
+            width: 28 * scaling
+            height: 28 * scaling
             radius: width * 0.5
-            color: Color.mPrimary
+            color: Color.mSecondary
 
-            NText {
-              anchors.centerIn: parent
-              text: "✓"
-              font.pointSize: Style.fontSizeXS * scaling
+            NIcon {
+              icon: "check"
+              font.pointSize: Style.fontSizeM * scaling
               font.weight: Style.fontWeightBold
-              color: Color.mOnPrimary
+              color: Color.mOnSecondary
+              anchors.centerIn: parent
             }
           }
 

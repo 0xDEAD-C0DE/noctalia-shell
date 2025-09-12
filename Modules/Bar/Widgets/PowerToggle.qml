@@ -19,5 +19,5 @@ NIconButton {
   colorFg: Color.mError
   colorBorder: Color.transparent
   colorBorderHover: Color.transparent
-  onClicked: PanelService.getPanel("powerPanel")?.toggle(screen)
+  onClicked: PanelService.getPanel("powerPanel")?.toggle()
 }

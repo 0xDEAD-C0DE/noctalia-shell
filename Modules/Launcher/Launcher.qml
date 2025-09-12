@@ -11,16 +11,10 @@ NPanel {
   id: root
 
   // Panel configuration
-  panelWidth: {
-    var w = Math.round(Math.max(screen?.width * 0.3, 500) * scaling)
-    w = Math.min(w, screen?.width - Style.marginL * 2)
-    return w
-  }
-  panelHeight: {
-    var h = Math.round(Math.max(screen?.height * 0.5, 600) * scaling)
-    h = Math.min(h, screen?.height - Style.barHeight * scaling - Style.marginL * 2)
-    return h
-  }
+  preferredWidth: 500
+  preferredWidthRatio: 0.3
+  preferredHeight: 600
+  preferredHeightRatio: 0.5
 
   panelKeyboardFocus: true
   panelBackgroundColor: Qt.alpha(Color.mSurface, Settings.data.appLauncher.backgroundOpacity)
@@ -287,8 +281,11 @@ NPanel {
       }
 
       // Results list
-      ListView {
+      NListView {
         id: resultsList
+
+        horizontalPolicy: ScrollBar.AlwaysOff
+        verticalPolicy: ScrollBar.AsNeeded
 
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -304,10 +301,6 @@ NPanel {
           if (currentIndex >= 0) {
             positionViewAtIndex(currentIndex, ListView.Contain)
           }
-        }
-
-        ScrollBar.vertical: ScrollBar {
-          policy: ScrollBar.AsNeeded
         }
 
         delegate: Rectangle {

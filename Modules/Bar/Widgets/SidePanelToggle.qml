@@ -33,7 +33,7 @@ NIconButton {
   readonly property bool useDistroLogo: (widgetSettings.useDistroLogo
                                          !== undefined) ? widgetSettings.useDistroLogo : widgetMetadata.useDistroLogo
 
-  icon: useDistroLogo ? "" : "panel"
+  icon: useDistroLogo ? "" : "noctalia"
   tooltipText: "Open side panel."
   sizeRatio: 0.8
 
@@ -43,8 +43,8 @@ NIconButton {
   colorBorderHover: Color.transparent
 
   anchors.verticalCenter: parent.verticalCenter
-  onClicked: PanelService.getPanel("sidePanel")?.toggle(screen, this)
-  onRightClicked: PanelService.getPanel("settingsPanel")?.toggle(screen)
+  onClicked: PanelService.getPanel("sidePanel")?.toggle(this)
+  onRightClicked: PanelService.getPanel("settingsPanel")?.toggle()
 
   IconImage {
     id: logo

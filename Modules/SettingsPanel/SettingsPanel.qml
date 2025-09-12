@@ -11,16 +11,11 @@ import qs.Widgets
 NPanel {
   id: root
 
-  panelWidth: {
-    var w = Math.round(Math.max(screen?.width * 0.4, 1000) * scaling)
-    w = Math.min(w, screen?.width - Style.marginL * 2)
-    return w
-  }
-  panelHeight: {
-    var h = Math.round(Math.max(screen?.height * 0.75, 800) * scaling)
-    h = Math.min(h, screen?.height - Style.barHeight * scaling - Style.marginL * 2)
-    return h
-  }
+  preferredWidth: 1000
+  preferredHeight: 1000
+  preferredWidthRatio: 0.4
+  preferredHeightRatio: 0.75
+
   panelAnchorHorizontalCenter: true
   panelAnchorVerticalCenter: true
 
@@ -31,6 +26,7 @@ NPanel {
     About,
     Audio,
     Bar,
+    Dock,
     Hooks,
     Launcher,
     Brightness,
@@ -72,7 +68,6 @@ NPanel {
     id: barTab
     Tabs.BarTab {}
   }
-
   Component {
     id: audioTab
     Tabs.AudioTab {}
@@ -117,6 +112,10 @@ NPanel {
     id: hooksTab
     Tabs.HooksTab {}
   }
+  Component {
+    id: dockTab
+    Tabs.DockTab {}
+  }
 
   // Order *DOES* matter
   function updateTabsModel() {
@@ -130,6 +129,11 @@ NPanel {
                      "label": "Bar",
                      "icon": "settings-bar",
                      "source": barTab
+                   }, {
+                     "id": SettingsPanel.Tab.Dock,
+                     "label": "Dock",
+                     "icon": "settings-dock",
+                     "source": dockTab
                    }, {
                      "id": SettingsPanel.Tab.Launcher,
                      "label": "Launcher",
@@ -526,11 +530,11 @@ NPanel {
                     anchors.fill: parent
                     pressDelay: 200
 
-                    ScrollView {
+                    NScrollView {
                       id: scrollView
                       anchors.fill: parent
-                      ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-                      ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                      horizontalPolicy: ScrollBar.AlwaysOff
+                      verticalPolicy: ScrollBar.AsNeeded
                       padding: Style.marginL * scaling
                       clip: true
 

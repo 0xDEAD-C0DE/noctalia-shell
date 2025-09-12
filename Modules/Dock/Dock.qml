@@ -32,8 +32,6 @@ Variants {
 
       screen: modelData
 
-      WlrLayershell.namespace: "noctalia-dock"
-
       readonly property bool autoHide: Settings.data.dock.autoHide
       readonly property int hideDelay: 500
       readonly property int showDelay: 100
@@ -42,14 +40,14 @@ Variants {
       readonly property int peekHeight: 7 * scaling
       readonly property int fullHeight: dockContainer.height
       readonly property int iconSize: 36 * scaling
-      readonly property int floatingMargin: 12 * scaling // Margin to make dock float
+      readonly property int floatingMargin: Settings.data.dock.floatingRatio * Style.marginL * scaling // Margin to make dock float
 
       // Bar detection and positioning properties
       readonly property bool hasBar: modelData.name ? (Settings.data.bar.monitors.includes(modelData.name)
                                                        || (Settings.data.bar.monitors.length === 0)) : false
       readonly property bool barAtBottom: hasBar && Settings.data.bar.position === "bottom"
       readonly property bool barAtTop: hasBar && Settings.data.bar.position === "top"
-      readonly property int barHeight: (barAtBottom || barAtTop) ? (Settings.data.bar.height || 30) * scaling : 0
+      readonly property int barHeight: (barAtBottom || barAtTop) ? Settings.data.bar.height * scaling : 0
       readonly property int dockSpacing: 8 * scaling // Space between dock and bar/edge
 
       // Track hover state
@@ -59,16 +57,14 @@ Variants {
 
       // Dock is positioned at the bottom
       anchors.bottom: true
-
-      // Dock should be above bar but not create its own exclusion zone
-      exclusionMode: ExclusionMode.Ignore
       focusable: false
-
-      // Make the window transparent
       color: Color.transparent
 
+      WlrLayershell.namespace: "noctalia-dock"
+      WlrLayershell.exclusionMode: Settings.data.dock.exclusive ? ExclusionMode.Auto : ExclusionMode.Ignore
+
       // Set the window size - include extra height only if bar is at bottom
-      implicitWidth: dockContainer.width + (floatingMargin * 2)
+      implicitWidth: dockContainer.width + (Style.marginM * 2 * scaling)
       implicitHeight: fullHeight + floatingMargin + (barAtBottom ? barHeight + dockSpacing : 0)
 
       // Position the entire window above the bar only when bar is at bottom
@@ -134,8 +130,8 @@ Variants {
 
       Rectangle {
         id: dockContainer
-        width: dockLayout.implicitWidth + Style.marginL * scaling * 2
-        height: Math.round(iconSize * 1.6)
+        width: dockLayout.implicitWidth + Style.marginM * scaling * 2
+        height: Math.round(iconSize * 1.5)
         color: Qt.alpha(Color.mSurface, Settings.data.dock.backgroundOpacity)
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
@@ -202,7 +198,7 @@ Variants {
 
           RowLayout {
             id: dockLayout
-            spacing: Style.marginL * scaling
+            spacing: Style.marginM * scaling
             Layout.preferredHeight: parent.height
             anchors.centerIn: parent
 
@@ -228,7 +224,6 @@ Variants {
                   visible: false
                 }
 
-                // The icon with better quality settings
                 Image {
                   id: appIcon
                   width: iconSize
@@ -322,7 +317,6 @@ Variants {
                   radius: Style.radiusXS * scaling
                   anchors.top: parent.bottom
                   anchors.horizontalCenter: parent.horizontalCenter
-                  anchors.topMargin: Style.marginXXS * 1.5 * scaling
 
                   // Pulse animation for active indicator
                   SequentialAnimation on opacity {

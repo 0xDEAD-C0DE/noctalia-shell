@@ -57,13 +57,6 @@ ColumnLayout {
     }
 
     NToggle {
-      label: "Show Corners"
-      description: "Display rounded corners on the edge of the screen."
-      checked: Settings.data.general.showScreenCorners
-      onToggled: checked => Settings.data.general.showScreenCorners = checked
-    }
-
-    NToggle {
       label: "Dim Desktop"
       description: "Dim the desktop when panels or menus are open."
       checked: Settings.data.general.dimDesktop
@@ -129,6 +122,7 @@ ColumnLayout {
       }
     }
   }
+
   NDivider {
     Layout.fillWidth: true
     Layout.topMargin: Style.marginXL * scaling
@@ -140,7 +134,7 @@ ColumnLayout {
     spacing: Style.marginL * scaling
     Layout.fillWidth: true
     NText {
-      text: "Dock"
+      text: "Screen Corners"
       font.pointSize: Style.fontSizeXXL * scaling
       font.weight: Style.fontWeightBold
       color: Color.mSecondary
@@ -148,44 +142,34 @@ ColumnLayout {
     }
 
     NToggle {
-      label: "Auto-hide Dock"
-      description: "Automatically hide the dock when not in use."
-      checked: Settings.data.dock.autoHide
-      onToggled: checked => Settings.data.dock.autoHide = checked
+      label: "Show Screen Corners"
+      description: "Display rounded corners on the edge of the screen."
+      checked: Settings.data.general.showScreenCorners
+      onToggled: checked => Settings.data.general.showScreenCorners = checked
     }
 
     ColumnLayout {
       spacing: Style.marginXXS * scaling
       Layout.fillWidth: true
 
-      NText {
-        text: "Dock Background Opacity"
-        font.pointSize: Style.fontSizeL * scaling
-        font.weight: Style.fontWeightBold
-        color: Color.mOnSurface
-      }
-
-      NText {
-        text: "Adjust the background opacity of the dock."
-        font.pointSize: Style.fontSizeXS * scaling
-        color: Color.mOnSurfaceVariant
-        wrapMode: Text.WordWrap
-        Layout.fillWidth: true
+      NLabel {
+        label: "Screen Corners Radius"
+        description: "Adjust the rounded corners of the screen."
       }
 
       RowLayout {
         NSlider {
           Layout.fillWidth: true
           from: 0
-          to: 1
+          to: 2
           stepSize: 0.01
-          value: Settings.data.dock.backgroundOpacity
-          onMoved: Settings.data.dock.backgroundOpacity = value
+          value: Settings.data.general.screenRadiusRatio
+          onMoved: Settings.data.general.screenRadiusRatio = value
           cutoutColor: Color.mSurface
         }
 
         NText {
-          text: Math.floor(Settings.data.dock.backgroundOpacity * 100) + "%"
+          text: Math.floor(Settings.data.general.screenRadiusRatio * 100) + "%"
           Layout.alignment: Qt.AlignVCenter
           Layout.leftMargin: Style.marginS * scaling
           color: Color.mOnSurface
